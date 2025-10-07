@@ -1,0 +1,130 @@
+===============================================
+             Nginx 命令手册
+===============================================
+
+Nginx 目录
+-----------------------------------------------
+C:\Users\Administrator\Desktop\nginx-1.28.0
+
+
+===============================================
+         基础命令（在 Nginx 目录下执行）
+===============================================
+
+1. 启动 Nginx
+-----------------------------------------------
+cd C:\Users\Administrator\Desktop\nginx-1.28.0
+start nginx
+
+
+2. 停止 Nginx
+-----------------------------------------------
+cd C:\Users\Administrator\Desktop\nginx-1.28.0
+nginx -s stop
+
+
+3. 重启 Nginx（修改配置后）
+-----------------------------------------------
+cd C:\Users\Administrator\Desktop\nginx-1.28.0
+nginx -s reload
+
+
+4. 测试配置文件是否正确
+-----------------------------------------------
+cd C:\Users\Administrator\Desktop\nginx-1.28.0
+nginx -t
+
+
+5. 强制结束所有 Nginx 进程
+-----------------------------------------------
+taskkill /f /im nginx.exe
+
+
+===============================================
+         多域名配置（完整配置文件）
+===============================================
+
+配置文件位置： C:\Users\Administrator\Desktop\nginx-1.28.0\conf\nginx.conf
+
+--- 从这里开始复制 ---
+
+worker_processes  auto;
+error_log  logs/error.log;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    access_log  logs/access.log;
+    sendfile        on;
+    keepalive_timeout  65;
+    
+    # ⭐⭐⭐ 重要：文件上传大小无限制（支持GIF等大文件）⭐⭐⭐
+    client_max_body_size 0;
+
+    # ===== 第一个网站（5000端口）=====
+    server {
+        listen       80;
+        
+        # ★★★ 这里改成你的第一个域名 ★★★
+        server_name  vocabulary.top;
+        
+        location / {
+            # ★★★ 这里是第一个程序的端口（5000）★★★
+            proxy_pass http://127.0.0.1:5000;
+            
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $host;
+            proxy_buffering off;
+            proxy_cache off;
+            proxy_read_timeout 120s;
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+        }
+    }
+
+    # ===== 第二个网站（8000端口 - FrostPage）=====
+    server {
+        listen       80;
+        
+        # ★★★ 这里改成你的第二个域名 ★★★
+        server_name  weirdcore.top;
+        
+        location / {
+            # ★★★ 这里是FrostPage的端口（8000）★★★
+            proxy_pass http://127.0.0.1:8000;
+            
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $host;
+            proxy_buffering off;
+            proxy_cache off;
+            proxy_read_timeout 120s;
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+        }
+    }
+}
+
+--- 复制到这里结束 ---
+
+
+操作步骤：
+-----------------------------------------------
+1. 把上面的配置复制到 nginx.conf
+2. 修改 server_name 改成你的实际域名
+3. 测试配置：nginx -t
+4. 重启Nginx：nginx -s reload
+5. 启动两个Python程序：
+   - 程序1运行在 127.0.0.1:5000
+   - 程序2运行在 127.0.0.1:8000
+
+
+===============================================
+最后更新：2025-10-06
+===============================================
+

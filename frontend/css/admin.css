@@ -1,0 +1,443 @@
+/* 管理后台 - 冰霜粗野主义风格 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    background: url('../images/background.webp') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--frost-deep);
+    height: 100vh;
+    overflow: hidden;
+    overflow-x: hidden;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 防止所有元素横向溢出 */
+* {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ========== 顶部导航 - 复刻用户界面 ========== */
+.admin-nav {
+    display: flex;
+    width: 100%;
+    height: 3.5rem;
+    border-bottom: 2px solid var(--frost-light);
+    background: var(--frost-bg-solid);
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+/* 导航元素统一样式（平均分配空间） */
+.nav-item {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--frost-deep);
+}
+
+.nav-item:hover {
+    background: rgba(123, 163, 184, 0.1);
+}
+
+.nav-btn.active {
+    background: var(--frost-accent);
+    color: white;
+    font-weight: 600;
+}
+
+#logout-btn {
+    color: #c00;
+    font-weight: 600;
+}
+
+#logout-btn:hover {
+    background: rgba(204, 0, 0, 0.1);
+    color: #900;
+}
+
+/* ========== 主内容区 ========== */
+.admin-main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--content-padding);
+    background: var(--frost-bg);
+    backdrop-filter: blur(10px);
+}
+
+/* 隐藏滚动条 */
+.admin-main::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+.admin-main::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.admin-main::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: transparent;
+    border-bottom: 1px solid var(--frost-light);
+}
+
+.main-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--frost-deep);
+    margin: 0;
+}
+
+#new-btn {
+    background: none;
+    border: none;
+    color: var(--frost-accent);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+#new-btn:hover {
+    color: var(--frost-deep);
+    border-bottom: 1px solid var(--frost-accent);
+}
+
+/* ========== 内容列表 - 极简版 ========== */
+#content-list {
+    background: transparent;
+}
+
+.empty {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--frost-dim);
+    font-size: 1rem;
+}
+
+.post-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--frost-light);
+    transition: background 0.2s ease;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-item:hover {
+    background: rgba(123, 163, 184, 0.05);
+}
+
+.post-info {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.post-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--frost-deep);
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+.post-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--frost-dim);
+}
+
+.status {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status.draft {
+    color: var(--frost-dim);
+}
+
+.status.published {
+    color: var(--frost-accent);
+}
+
+.post-content {
+    color: var(--frost-deep);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+}
+
+.post-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+/* 简洁文本链接样式 */
+.action-link {
+    color: var(--frost-accent);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.action-link:hover {
+    color: var(--frost-deep);
+    border-bottom: 2px solid var(--frost-accent);
+}
+
+.action-link.danger {
+    color: #c00;
+}
+
+.action-link.danger:hover {
+    color: #900;
+    border-bottom: 2px solid #c00;
+}
+
+/* ========== 编辑器弹窗 - 极简版 ========== */
+.editor-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.editor-overlay.show {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.editor-box {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 1rem;
+}
+
+.editor-header {
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--frost-deep);
+    background: transparent;
+}
+
+.editor-body {
+    padding: 1rem;
+    background: transparent;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--frost-deep);
+}
+
+#editor-title {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--frost-light);
+    font-size: 0.95rem;
+    background: white;
+    color: var(--frost-deep);
+    transition: border-color 0.2s ease;
+}
+
+#editor-title:focus {
+    outline: none;
+    border-color: var(--frost-accent);
+}
+
+#editor-content {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--frost-light);
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 200px;
+    font-family: inherit;
+    background: white;
+    color: var(--frost-deep);
+    line-height: 1.6;
+    transition: border-color 0.2s ease;
+}
+
+#editor-content:focus {
+    outline: none;
+    border-color: var(--frost-accent);
+}
+
+/* 图片上传组件容器 */
+#image-uploader-container {
+    margin-top: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* ========== 底部按钮 - 极简版 ========== */
+.editor-footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    background: transparent;
+}
+
+#cancel-btn {
+    background: none;
+    border: none;
+    color: var(--frost-dim);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+#cancel-btn:hover {
+    color: var(--frost-deep);
+    border-bottom: 1px solid var(--frost-dim);
+}
+
+#save-btn {
+    background: none;
+    border: none;
+    color: var(--frost-accent);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+#save-btn:hover {
+    color: var(--frost-deep);
+    border-bottom: 1px solid var(--frost-accent);
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+    /* 导航栏保持单行，缩小字体 */
+    .admin-nav {
+        height: 3rem;
+    }
+    
+    .nav-item {
+        font-size: 0.85rem;
+    }
+    
+    /* 主内容区压缩间距 */
+    .admin-main {
+        padding: 0.8rem;
+    }
+    
+    .main-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* 内容列表紧凑显示 */
+    .post-item {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .post-info {
+        width: 100%;
+    }
+    
+    .post-actions {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 1.5rem;
+    }
+    
+    .action-link {
+        font-size: 0.9rem;
+    }
+    
+    /* 编辑器弹窗 */
+    .editor-box {
+        width: 95%;
+        max-height: 90vh;
+        margin: 0.5rem;
+    }
+    
+    .editor-body {
+        padding: 0.8rem;
+    }
+    
+    .editor-footer {
+        padding: 0.8rem;
+    }
+    
+    /* 文字大小调整 */
+    body {
+        font-size: 14px;
+    }
+}

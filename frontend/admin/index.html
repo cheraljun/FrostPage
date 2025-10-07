@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - FrostPage</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/uploader.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="admin-nav">
+        <button class="nav-item nav-btn active" data-type="research">研究</button>
+        <button class="nav-item nav-btn" data-type="media">媒体</button>
+        <button class="nav-item nav-btn" data-type="activity">活动</button>
+        <button class="nav-item nav-btn" data-type="shop">商店</button>
+        <button class="nav-item nav-btn" data-type="announcement">公告</button>
+        <button class="nav-item nav-btn" data-type="chat">留言</button>
+        <button class="nav-item nav-btn" data-type="cleanup">清理</button>
+        <button class="nav-item" id="logout-btn">退出</button>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="admin-main">
+        <div class="main-header">
+            <h2>内容管理</h2>
+            <button id="new-btn">+ 新建</button>
+        </div>
+        
+        <div id="content-list"></div>
+    </main>
+
+    <!-- 编辑器弹窗 -->
+    <div class="editor-overlay" id="editor-overlay">
+        <div class="editor-box">
+            <div class="editor-header">编辑内容</div>
+            
+            <div class="editor-body">
+                <div class="form-group">
+                    <label class="form-label">标题（可选）</label>
+                    <input type="text" id="editor-title" placeholder="输入标题...">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">内容 *</label>
+                    <textarea id="editor-content" placeholder="输入内容..." rows="10"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">图片（最多16张）</label>
+                    <div id="image-uploader-container"></div>
+                </div>
+            </div>
+            
+            <div class="editor-footer">
+                <button id="cancel-btn">取消</button>
+                <button id="save-btn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/admin/admin.js"></script>
+</body>
+</html>
